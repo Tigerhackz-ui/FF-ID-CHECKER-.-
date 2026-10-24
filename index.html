@@ -1,27 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="si">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FF CHECKER V3</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Inter:wght@700&display=swap" rel="stylesheet">
+<title>Hina Theruma - සිහින තේරුම</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Maname&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#080808;color:#fff;font-family:'Inter',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
-.box{width:100%;max-width:380px;background:#111;border:1px solid #333;border-radius:20px;padding:24px;text-align:center}
-.logo{font-family:'Orbitron',sans-serif;font-size:28px;color:#ffcc00;text-shadow:0 0 15px #ffcc00}
-.sub{color:#ffcc00;font-size:11px;margin:8px 0 20px;letter-spacing:3px;font-weight:700}
-input{width:100%;padding:16px;border-radius:14px;border:1px solid #333;background:#0f0f0f;color:#fff;font-size:16px;outline:none;text-align:center}
-input:focus{border-color:#ffcc00}
-button{width:100%;margin-top:16px;padding:16px;border:none;border-radius:14px;background:#ffcc00;color:#000;font-weight:900;font-size:18px;cursor:pointer}
-button:active{transform:scale(.96)}
-.result{margin-top:20px;background:#0a0a0a;border:1px solid #222;border-radius:16px;padding:16px;display:none;text-align:left}
-.row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1a1a1a;font-size:14px}
-.label{color:#888}.value{color:#ffcc00;font-weight:700}
-.badge{display:inline-block;background:#ffcc00;color:#000;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;margin-top:8px}
-.footer{margin-top:20px;font-size:10px;color:#555}
-.success{color:#00ff88;text-align:center;font-weight:700;margin-bottom:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Maname','Noto Sans Sinhala',serif;
+  background:#0a0a12;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(120,80,255,0.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255,200,50,0.15) 0%, transparent 50%),
+    url('https://www.transparenttextures.com/patterns/stardust.png');
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:16px; color:white;
+}
+.glow-orb{position:fixed; width:300px; height:300px; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:0;}
+.orb1{background:rgba(138,80,255,0.3); top:-50px; left:-50px; animation:float1 6s infinite ease-in-out}
+.orb2{background:rgba(255,214,64,0.2); bottom:-50px; right:-50px; animation:float2 7s infinite ease-in-out}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,30px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-30px)}}
+
+.card{
+  position:relative; z-index:1;
+  width:100%; max-width:440px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+  border:1px solid rgba(255,255,255,0.12); border-radius:32px;
+  padding:28px 24px; box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.header{text-align:center; margin-bottom:22px}
+.icon{font-size:48px; filter:drop-shadow(0 0 20px rgba(255,214,64,0.6)); animation:glow 2s infinite alternate}
+@keyframes glow{from{transform:scale(1)} to{transform:scale(1.1)}}
+h1{font-family:'Poppins',sans-serif; font-size:28px; font-weight:800; margin-top:6px}
+h1 span{background: linear-gradient(90deg,#FFD93D,#A78BFA); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+.sub{font-size:13px; opacity:0.65; margin-top:6px; font-family:'Noto Sans Sinhala'; letter-spacing:0.3px}
+
+.input-wrap{position:relative; margin-top:6px}
+textarea{
+  width:100%; height:125px; background: rgba(0,0,0,0.35); 
+  border:1.5px solid rgba(255,255,255,0.12); border-radius:18px;
+  padding:18px; color:white; font-size:16px; line-height:1.6;
+  outline:none; resize:none; transition:0.3s;
+  font-family:'Noto Sans Sinhala','Maname'; 
+}
+textarea:focus{border-color:#FFD93D; box-shadow:0 0 0 3px rgba(255,217,61,0.15), 0 0 20px rgba(255,217,61,0.15)}
+textarea::placeholder{color:rgba(255,255,255,0.35)}
+
+.btn{
+  position:relative; overflow:hidden;
+  width:100%; margin-top:18px; padding:18px; border:none; border-radius:18px;
+  background: linear-gradient(100deg,#FFD93D 0%, #FF8A2B 100%); color:#000;
+  font-weight:800; font-size:17px; cursor:pointer; transition:0.15s;
+  font-family:'Noto Sans Sinhala'; box-shadow: 0 8px 25px rgba(255,180,30,0.35);
+}
+.btn:active{transform:scale(0.97); box-shadow:0 4px 12px rgba(255,180,30,0.25)}
+.btn::after{content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,0.4); border-radius:50%; transform:translate(-50%,-50%); transition:0.5s}
+.btn:active::after{width:300px; height:300px; opacity:0}
+
+.loader{display:none; text-align:center; padding:28px 10px}
+.moon{font-size:32px; animation:spinMoon 2s linear infinite}
+@keyframes spinMoon{0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)}}
+.dots{margin-top:12px}
+.dot{width:9px; height:9px; background:#FFD93D; border-radius:50%; display:inline-block; margin:0 4px; animation:bounce 1.3s infinite}
+.dot:nth-child(2){animation-delay:0.15s} .dot:nth-child(3){animation-delay:0.3s}
+@keyframes bounce{0%,80%,100%{transform:scale(0); opacity:0.5} 40%{transform:scale(1); opacity:1}}
+.load-text{font-family:'Noto Sans Sinhala'; font-size:13px; margin-top:10px; opacity:0.8; letter-spacing:0.5px}
+
+.result-box{
+  display:none; margin-top:22px; background: #fefefe; color:#161616;
+  border-radius:24px; padding:0; overflow:hidden;
+  transform-origin: top center; animation: pageTurn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+@keyframes pageTurn{
+  0%{transform: perspective(800px) rotateX(-75deg) translateY(20px); opacity:0}
+  100%{transform: perspective(800px) rotateX(0) translateY(0); opacity:1}
+}
+.r-head{padding:18px 22px 14px; border-bottom:1px dashed #ddd; display:flex; justify-content:space-between; align-items:center}
+.r-title{font-size:12px; opacity:0.6; font-family:'Noto Sans Sinhala'; text-transform:uppercase; letter-spacing:1px}
+.r-badge{background:#111; color:#FFD93D; font-size:10px; padding:4px 10px; border-radius:20px; font-family:'Poppins';}
+.r-body{padding:20px 22px}
+.r-main{font-size:22px; font-weight:700; line-height:1.3; font-family:'Maname'; color:#111}
+.r-desc{font-size:15px; line-height:1.7; margin-top:12px; font-family:'Noto Sans Sinhala'; color:#333}
+.r-extra{margin-top:16px; background:#FFF7D1; border-left:4px solid #FFD93D; padding:12px 14px; border-radius:0 12px 12px 0; font-size:13px; font-family:'Noto Sans Sinhala';}
+.again{margin:18px 22px 20px; width:calc(100% - 44px); padding:13px; border-radius:14px; border:1.5px solid #111; background:transparent; cursor:pointer; font-weight:700; font-family:'Noto Sans Sinhala'; transition:0.2s}
+.again:active{transform:scale(0.98)}
+
+.powered{margin-top:22px; text-align:center; font-size:10px; opacity:0.35; letter-spacing:1.5px; font-family:'Poppins'; text-transform:uppercase}
+.powered b{color:#FFD93D}
 </style>
 </head>
 <body>
-<div class="
+<div class="glow-orb orb1"></div><div class="glow-orb orb2"></div>
+
+<div class="card">
+  <div class="header">
+    <div class="icon">🌙</div>
+    <h1><span>Hina</span> Theruma</h1>
+    <p class="sub">රෑට දකින හීනෙක තේරුම දැනගන්න</p>
+  </div>
+
+  <div class="input-wrap">
+    <textarea id="hinaInput" placeholder="උදා: මම උඩින් වැටෙනවා දැක්කා, සතෙක් දැක්කා, යාළුවෙක් දැක්කා වගේ..."></textarea>
+  </div>
+  <button class="btn" id="mainBtn" onclick="findTheruma()">🔮 හීනෙ තේරුම බලන්න</button>
+
+  <div class="loader" id="loader">
+    <div class="moon">🌙</div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <p class="load-text">හීන ලෝකයේ... හොයනවා...</p>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="r-head">
+      <span class="r-title">ඔයා දුටු හීනයේ තේරුම</span>
+      <span class="r-badge">BEST MATCH</span>
+    </div>
+    <div class="r-body">
+      <div class="r-main" id="rMain"></div>
+      <div class="r-desc" id="rDesc"></div>
+      <div class="r-extra" id="rExtra"></div>
+    </div>
+    <button class="again" onclick="resetHina()">තව හීනයක් කියන්න ↺</button>
+  </div>
+
+  <div class="powered">Powered by <b>Tiger Hackz</b> 🐯</div>
+</div>
+
+<script>
+const hinaDB = {
+  "වැටෙන": {m:"ජීවිතේ පාලනය නැතිවෙන හැඟීම", d:"ඔයා මේ දවස් වල යම් දෙයක් ගැන බය වෙලා හෝ stress වෙලා. රස්සාව, විභාගය, සම්බන්ධයක් ගැන. ටිකක් relax වෙන්න, ඔක්කොම හරි යනවා.", e:"අවවාදය: හදිසි තීරණ ගන්න එපා."},
+  "සර්ප": {m:"සතුරෙක් හෝ සැඟවුණු බිය", d:"සර්පයෙක් දකින එකෙන් කියන්නේ ළඟ ඉන්න කෙනෙක් ගැන සැලකිලිමත් වෙන්න කියලා. ඒ වගේම ලොකු වෙනසක්, සුව වීමක් එන ලකුණක්.", e:"යහපත: ණය / ලෙඩක් සුව වීම."},
+  "දිය": {m:"පිරිසිදු වීම සහ අලුත් ආරම්භය", d:"පිරිසිදු වතුර දැක්කොත් හොඳ ආරංචියක්, සල්ලි ලැබීමක්. අපිරිසිදු වතුර නම් පොඩි කරදරයක්.", e:"සුබ ලකුණ: මනස පිරිසිදු වෙනවා."},
+  "මරණය": {m:"අවසානයක් නෙමෙයි, අලුත් ආරම්භයක්", d:"මරණයක් දැක්කොත් බය වෙන්න එපා. ඒක දිගු ආයුෂ, එක තැනකින් තවත් තැනකට යාමක්.", e:"ධනාත්මක: පැරණි ප්‍රශ්නයක් ඉවරයි."},
+  "බබා": {m:"වාසනාව සහ අලුත් බලාපොරොත්තුව", d:"පොඩි බබෙක් දැක්කොත් ගෙදරට සතුටක්, අලුත් වැඩක් පටන් ගන්න හොඳ කාලයක්.", e:"සුබයි: අලුත් ආදායමක්."},
+  "ගෙදර": {m:"ආරක්ෂාව සහ පවුල", d:"ගෙයක් දකින එකෙන් කියන්නේ ඔයාට ආරක්ෂිත තැනක් ඕන කියලා. අලුත් ගෙයක් නම් දියුණුවක්.", e:"පවුලේ කෙනෙක්ගෙන් උදව්වක් ලැබෙනවා."},
+  "මුදල්": {m:"බලය සහ ආත්ම විශ්වාසය", d:"සල්ලි දකින එකෙන් කියන්නේ ඔයාගේ වටිනාකම වැඩි වෙනවා කියලා. හැබැයි වියදම ගැනත් සැලකිලිමත් වෙන්න.", e:"ඉක්මනින් ලැබීමක් තියෙනවා."},
+  "පියාඹන": {m:"නිදහස ලැබීම", d:"ඉගිල්ලෙනවා දැක්කොත් ඔයා ප්‍රශ්නයකින් නිදහස් වෙනවා. ලොකු හීනයක් හැබෑ වෙන ලකුණක්.", e:"Target එකට යනවා."},
+  "ආදරය": {m:"සම්බන්ධතාවයක අවශ්‍යතාවය", d:"ආදරය, සිප ගැනීමක් දැක්කොත් තනිකම නැති වෙනවා, කෙනෙක් ළං වෙනවා.", e:"කෙනෙක් ඔයාව මතක් කරනවා."},
+  "default": {m:"ඔයාගේ යටි හිත පණිවිඩයක් දෙනවා", d:"ඔයා දුටු හීනයෙන් කියන්නේ ඔයා මේ දවස් වල හිතන දෙයක් ගොඩක් බලවත්වෙලා කියලා. හිතේ තියෙන දේ කොලේක ලියන්න, පැහැදිලි වෙනවා.", e:"උපදෙස්: අද දවසේ හොඳ දෙයක් කරන්න."}
+};
+
+const keywords = Object.keys(hinaDB);
+
+function findTheruma(){
+  const val = document.getElementById('hinaInput').value.trim();
+  if(!val || val.length < 2){ alert("මුලින්ම හීනය ටිකක් ලියන්න බං! 🌙"); return; }
+  
+  const btn = document.getElementById('mainBtn');
+  btn.disabled=true; btn.style.opacity=0.6;
+  document.getElementById('loader').style.display='block';
+  document.getElementById('resultBox').style.display='none';
+
+  setTimeout(()=>{
+    let found = null;
+    let lower = val.toLowerCase();
+    for(let k of keywords){
+      if(lower.includes(k) || val.includes(k)){
+        found = hinaDB[k]; break;
+      }
+    }
+    if(!found){
+      // random best match if no keyword
+      if(lower.includes("dog")||lower.includes("බල්ලා")) found={m:"විශ්වාසවන්ත යාළුවෙක්", d:"බල්ලෙක් දැක්කොත් යාළුවෙක් උදව්වට එනවා. ආරක්ෂාව ලැබෙනවා.", e:"සුබයි: යාළුවෙක්ගෙන් ආරංචියක්."};
+      else if(lower.includes("cat")||lower.includes("පූසා")) found={m:"ස්වාධීන බව", d:"පූසෙක් දැක්කොත් කපටි කෙනෙක් ගැන සැලකිලිමත් වෙන්න.", e:"අවවාදය: රහසක් තබාගන්න."};
+      else found = hinaDB["default"];
+    }
+
+    document.getElementById('rMain').innerText = found.m;
+    document.getElementById('rDesc').innerText = found.d;
+    document.getElementById('rExtra').innerText = "💡 " + found.e;
+    
+    document.getElementById('loader').style.display='none';
+    document.getElementById('resultBox').style.display='block';
+    btn.disabled=false; btn.style.opacity=1;
+    document.getElementById('resultBox').scrollIntoView({behavior:'smooth'});
+  }, 1400); // 1.4 sec realistic loading
+}
+
+function resetHina(){
+  document.getElementById('hinaInput').value='';
+  document.getElementById('resultBox').style.display='none';
+  document.getElementById('hinaInput').focus();
+}
+</script>
+</body>
+</html>
